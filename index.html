@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Partner with Us | Horoscope.com</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 500;
+      color: #111;
+      background: #fff;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; }
+
+    /* ══════════════════════════════════════════════
+       NAVIGATION
+    ══════════════════════════════════════════════ */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: #fff;
+      height: 60px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    }
+    .nav-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding: 0 133px;
+      gap: 0;
+    }
+    .nav-logo img {
+      height: 23px;
+      width: 168px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      margin-left: 16px;
+      flex-wrap: nowrap;
+    }
+    .nav-links a {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      color: #111;
+      text-transform: uppercase;
+      padding: 0 10px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+    .nav-links .chevron {
+      display: inline-flex;
+      align-items: center;
+      transform: rotate(180deg);
+    }
+    .nav-links .chevron img { width: 10px; height: 7px; }
+    .nav-social { margin-left: auto; flex-shrink: 0; }
+    .nav-social img { height: 37px; width: 198px; object-fit: cover; }
+
+    /* Hamburger (mobile) */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      margin-left: auto;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #111;
+      border-radius: 2px;
+      transition: transform 0.25s, opacity 0.25s;
+    }
+
+    /* Mobile nav drawer */
+    .nav-drawer {
+      display: none;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background: #fff;
+      z-index: 199;
+      padding: 16px 24px 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      flex-direction: column;
+      gap: 0;
+    }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer a {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      color: #111;
+      text-transform: uppercase;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+      display: block;
+    }
+
+    /* ══════════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════════ */
+    .hero { background: #fff; text-align: center; }
+
+    /* Pigeon image: Figma spec — 1176×1176px centred in 1440px,
+       positioned at top:-486px in the page frame.
+       Our hero container starts below the 60px nav, so
+       image top relative to this container = -486 - 60 = -546px. */
+    .hero-image-wrap {
+      position: relative;
+      width: 100%;
+      height: 360px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .hero-image {
+      position: absolute;
+      width: 1176px;
+      height: 1176px;
+      left: 50%;
+      transform: translateX(-50%);
+      top: -546px;
+      object-fit: cover;
+      pointer-events: none;
+    }
+    /* Gradient blends that match the Figma fade-to-white effect */
+    .hero-image-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top,  #fff 0%, rgba(255,255,255,0) 40%),
+        linear-gradient(to right, #fff 0%, rgba(255,255,255,0) 18%),
+        linear-gradient(to left,  #fff 0%, rgba(255,255,255,0) 18%);
+      pointer-events: none;
+    }
+    .hero-text { padding: 44px 24px 0; }
+    .hero-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 48px;
+      color: #111;
+      line-height: 1.038;
+      margin-bottom: 18px;
+    }
+    .hero-text p {
+      font-size: 16px;
+      line-height: 1.5;
+      max-width: 653px;
+      margin: 0 auto;
+    }
+    .hero-text p a { text-decoration: underline; text-decoration-skip-ink: none; }
+
+    /* ── Star belt ── */
+    .star-belt {
+      position: relative;
+      height: 110px;
+      overflow: visible;
+      pointer-events: none;
+    }
+    .star-belt img { position: absolute; }
+
+    /* ══════════════════════════════════════════════
+       SHARED SECTION TYPOGRAPHY
+    ══════════════════════════════════════════════ */
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 28px;
+      color: #111;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .section-subtitle {
+      font-size: 16px;
+      line-height: 1.5;
+      text-align: center;
+      margin: 0 auto 48px;
+      max-width: 703px;
+    }
+
+    /* ══════════════════════════════════════════════
+       COLLABORATION OPPORTUNITIES
+    ══════════════════════════════════════════════ */
+    .collab-section { padding: 60px 24px 80px; background: #fff; }
+    .collab-cards {
+      display: flex;
+      justify-content: center;
+      gap: 34px;        /* exact Figma gap: card positions 179→517, 551→ = 34px */
+      flex-wrap: wrap;
+    }
+    .collab-card {
+      background: #fafafa;
+      border-radius: 10px;
+      width: 338px;
+      height: 408px;
+      overflow: hidden;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Image area: 338×242, overflow hidden, image absolutely positioned
+       with exact % offsets taken straight from the Figma node data */
+    .collab-card-img-wrap {
+      position: relative;
+      width: 338px;
+      height: 242px;
+      flex-shrink: 0;
+      overflow: hidden;
+      border-radius: 10px 10px 0 0;
+    }
+    .collab-card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    /* Text area: remaining 166px, text centred vertically (~13px padding each side)
+       Cards 1&3 text width = 275px; card 2 = 221px — both centred in 338px card */
+    .collab-card-body {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 32px;    /* (338-275)/2 ≈ 31.5px → 32px */
+      text-align: center;
+    }
+    .collab-card-body.narrow { padding: 0 59px; } /* (338-221)/2 ≈ 58.5px → 59px */
+    .collab-card-body p { font-size: 16px; line-height: 1.5; }
+    .collab-card-body strong {
+      font-weight: 700;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* ══════════════════════════════════════════════
+       TRUSTED BY
+    ══════════════════════════════════════════════ */
+    .trusted-wrapper {
+      background: linear-gradient(135deg, #c3aeda 0%, #b49ccc 50%, #c3aeda 100%);
+    }
+    .trusted-section {
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      background: rgba(187,164,215,0.5);
+      padding: 28px 24px;
+    }
+    .trusted-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 28px;
+      color: #fff;
+      line-height: 1.1;
+      text-align: center;
+    }
+    .trusted-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+    .trusted-logos img {
+      max-height: 55px;
+      width: auto;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+
+    /* ══════════════════════════════════════════════
+       STATS SECTION
+    ══════════════════════════════════════════════ */
+    .stats-section {
+      position: relative;
+      background: linear-gradient(180deg, #ede8f7 0%, #e0d8f0 45%, #ede8f7 100%);
+      overflow: hidden;
+      padding: 60px 20px 80px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto auto auto;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+    }
+    .stat-5m  { grid-column: 1; grid-row: 1; }
+    .stat-75m { grid-column: 3; grid-row: 1; }
+    .stat-65  { grid-column: 2; grid-row: 2; }
+    .stat-45m { grid-column: 1; grid-row: 3; }
+    .stat-2m  { grid-column: 3; grid-row: 3; }
+    .stat-circle-wrap {
+      position: relative;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0) 72%);
+    }
+    .stat-circle-wrap::before {
+      content: '';
+      position: absolute;
+      width: 78%;
+      height: 78%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 72%);
+      pointer-events: none;
+    }
+    .stat-65 .stat-circle-wrap {
+      width: 320px;
+      height: 320px;
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 62px;
+      color: #6f41a9;
+      line-height: 1;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .stat-65 .stat-num { font-size: 76px; }
+    .stat-lbl {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 500;
+      font-size: 13px;
+      color: #6f41a9;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      line-height: 1.4;
+      text-align: center;
+      margin-top: 10px;
+      position: relative;
+      z-index: 1;
+    }
+    .stats-deco { position: absolute; pointer-events: none; }
+    /* ══════════════════════════════════════════════
+       TOPICS WE COVER
+    ══════════════════════════════════════════════ */
+    .topics-section { padding: 72px 24px 80px; background: #fff; }
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 200px);
+      gap: 60px 40px;
+      justify-content: center;
+    }
+    .topic-item { text-align: center; }
+    .topic-item img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-bottom: 14px;
+    }
+    .topic-item p {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 1.5;
+    }
+
+    /* ── Carousel dots (hidden on desktop) ── */
+    .topics-dots {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-top: 28px;
+    }
+    .topics-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #d8cce8;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.25s;
+      flex-shrink: 0;
+    }
+    .topics-dot.active {
+      background: #6f41a9;
+      transform: scale(1.35);
+    }
+
+    /* ══════════════════════════════════════════════
+       CTA
+    ══════════════════════════════════════════════ */
+    .cta-section { padding: 80px 24px 40px; text-align: center; }
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 28px;
+      color: #111;
+      line-height: 1.1;
+      max-width: 640px;
+      margin: 0 auto 20px;
+    }
+    .cta-section p { font-size: 16px; line-height: 1.5; max-width: 664px; margin: 0 auto; }
+
+    /* ══════════════════════════════════════════════
+       FORM SECTION
+    ══════════════════════════════════════════════ */
+    .form-section {
+      position: relative;
+      padding: 60px 24px 80px;
+      overflow: hidden;
+    }
+    .form-bg-el {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .form-bg-el-1 { top: 20px; width: min(908px, 90vw); }
+    .form-bg-el-2 { top: 64px; width: min(711px, 75vw); }
+    .form-container {
+      position: relative;
+      z-index: 1;
+      background: rgba(255,255,255,0.65);
+      border-radius: 4px;
+      box-shadow: 0 2px 10px 10px rgba(17,17,17,0.05);
+      max-width: 1082px;
+      margin: 0 auto;
+      padding: 48px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: center;
+    }
+    .form-container h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 1.5;
+    }
+    .form-fields { display: flex; flex-direction: column; gap: 20px; width: 100%; }
+    .form-field { display: flex; flex-direction: column; gap: 10px; }
+    .form-field label {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    .form-field input,
+    .form-field textarea {
+      background: #fff;
+      border: 1px solid #111;
+      border-radius: 2px;
+      padding: 12px 20px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 16px;
+      color: #111;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-field input { height: 50px; }
+    .form-field textarea { height: 184px; resize: vertical; }
+    .form-field input:focus, .form-field textarea:focus { border-color: #6f41a9; }
+    .btn-send {
+      background: linear-gradient(to left, #e3f6ed, #dee1f6);
+      border: none;
+      border-radius: 2px;
+      box-shadow: 5px 5px 0 0 #ddcee0;
+      padding: 14px 20px;
+      width: 100%;
+      cursor: pointer;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      color: #111;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: opacity 0.2s;
+    }
+    .btn-send:hover { opacity: 0.85; }
+
+    /* ══════════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════════ */
+    .footer { position: relative; height: 128px; overflow: hidden; }
+    .footer img {
+      position: absolute;
+      top: 0; left: -12.78%;
+      width: 124.37%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ══════════════════════════════════════════════
+       RESPONSIVE — TABLET  (≤1200px)
+    ══════════════════════════════════════════════ */
+    @media (max-width: 1200px) {
+      .nav-inner { padding: 0 48px; }
+      .nav-links a { font-size: 13px; padding: 0 7px; }
+      .nav-social img { width: 160px; }
+
+      .stats-grid { max-width: 700px; }
+      .stat-circle-wrap { width: 210px; height: 210px; }
+      .stat-65 .stat-circle-wrap { width: 260px; height: 260px; }
+      .stat-num { font-size: 52px; }
+      .stat-65 .stat-num { font-size: 64px; }
+
+      .form-container { padding: 40px 48px; }
+    }
+
+    /* ══════════════════════════════════════════════
+       RESPONSIVE — SMALL TABLET  (≤900px)
+    ══════════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .nav-social { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-inner { padding: 0 24px; }
+
+      /* Hero */
+      .hero-image-wrap { height: 260px; }
+      .hero-image { width: 860px; height: 860px; top: -370px; }
+      .hero-text h1 { font-size: 36px; }
+      .star-belt { height: 80px; }
+
+      /* Stats */
+      .stat-circle-wrap { width: 160px; height: 160px; }
+      .stat-65 .stat-circle-wrap { width: 200px; height: 200px; }
+      .stat-num { font-size: 40px; }
+      .stat-65 .stat-num { font-size: 50px; }
+      .stat-lbl { font-size: 11px; }
+
+      /* Collab cards */
+      .collab-card { width: 100%; max-width: 420px; height: auto; min-height: 408px; }
+      .collab-card-img-wrap { width: 100%; }
+      .collab-cards { gap: 20px; }
+
+      /* Trusted logos */
+      .trusted-logos { gap: 28px; }
+
+      /* Topics → carousel */
+      .topics-section { padding: 60px 0 60px; }
+      .topics-grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 20px;
+        padding: 8px 40px 12px;
+      }
+      .topics-grid::-webkit-scrollbar { display: none; }
+      .topic-item {
+        flex-shrink: 0;
+        scroll-snap-align: center;
+        width: 160px;
+      }
+      .topic-item img { width: 160px; height: 160px; }
+      .topics-dots { display: flex; }
+
+      /* Form */
+      .form-container { padding: 32px 28px; }
+    }
+
+    /* ══════════════════════════════════════════════
+       RESPONSIVE — MOBILE  (≤480px)
+    ══════════════════════════════════════════════ */
+    @media (max-width: 480px) {
+      /* Hero */
+      .hero-image-wrap { height: 200px; }
+      .hero-image { width: 620px; height: 620px; top: -270px; }
+      .hero-text h1 { font-size: 28px; }
+      .hero-text p { font-size: 14px; }
+      .star-belt { height: 60px; }
+
+      /* Section headings */
+      .section-heading { font-size: 22px; }
+
+      /* Collab */
+      .collab-section { padding: 40px 16px 56px; }
+      .collab-card { width: 100%; max-width: none; height: auto; min-height: 380px; }
+      .collab-card-img-wrap { height: 200px; }
+
+      /* Trusted */
+      .trusted-logos { gap: 20px; }
+      .trusted-logos img { max-height: 40px; }
+      .trusted-section h2 { font-size: 22px; }
+
+      /* Stats */
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .stat-65 { grid-column: 1 / -1; }
+      .stat-circle-wrap { width: 140px; height: 140px; }
+      .stat-65 .stat-circle-wrap { width: 160px; height: 160px; }
+      .stat-num { font-size: 34px; }
+      .stat-65 .stat-num { font-size: 40px; }
+
+      /* Topics carousel — tighter on small phones */
+      .topics-grid { gap: 16px; padding: 8px 28px 12px; }
+      .topic-item { width: 140px; }
+      .topic-item img { width: 140px; height: 140px; }
+      .topic-item p { font-size: 16px; }
+
+      /* CTA */
+      .cta-section { padding: 56px 16px 32px; }
+      .cta-section h2 { font-size: 22px; }
+
+      /* Form */
+      .form-container { padding: 24px 16px; }
+      .form-section { padding: 40px 16px 60px; }
+
+      /* Footer */
+      .footer { height: 90px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAVIGATION ══ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <img src="assets/a939473d7f9026b3b2bf9d694d3e1a433ae7e442.png" alt="HoroscopePet" />
+    </div>
+    <ul class="nav-links">
+      <li><a href="#">Horoscopes <span class="chevron"><img src="assets/468a31e9189756ad21a525e986a8017756e0e13c.svg" alt=""></span></a></li>
+      <li><a href="#">Articles <span class="chevron"><img src="assets/468a31e9189756ad21a525e986a8017756e0e13c.svg" alt=""></span></a></li>
+      <li><a href="#">Tarot <span class="chevron"><img src="assets/468a31e9189756ad21a525e986a8017756e0e13c.svg" alt=""></span></a></li>
+      <li><a href="#">Games <span class="chevron"><img src="assets/468a31e9189756ad21a525e986a8017756e0e13c.svg" alt=""></span></a></li>
+      <li><a href="#">Zodiac Signs <span class="chevron"><img src="assets/468a31e9189756ad21a525e986a8017756e0e13c.svg" alt=""></span></a></li>
+      <li><a href="#">Psychics <span class="chevron"><img src="assets/468a31e9189756ad21a525e986a8017756e0e13c.svg" alt=""></span></a></li>
+      <li><a href="#">Store</a></li>
+    </ul>
+    <div class="nav-social">
+      <img src="assets/f61e1d7ba90b368c49c5b2b8c77b2ac1f5f42be3.png" alt="Social" />
+    </div>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-drawer" id="navDrawer">
+  <a href="#">Horoscopes</a>
+  <a href="#">Articles</a>
+  <a href="#">Tarot</a>
+  <a href="#">Games</a>
+  <a href="#">Zodiac Signs</a>
+  <a href="#">Psychics</a>
+  <a href="#">Store</a>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-image-wrap">
+    <img
+      class="hero-image"
+      src="assets/0e5fc39bb695f2a52dd626515365f1d4582619f1.png"
+      alt="Two white doves"
+    />
+  </div>
+  <div class="hero-text">
+    <h1>Partner with us</h1>
+    <p>
+      As the leading astrology media company,
+      <a href="http://horoscope.com">Horoscope.com</a>
+      and Astrology.com connect millions of spiritually-inclined and curious
+      individuals with brands that resonate deeply with their daily self-care journeys.
+    </p>
+  </div>
+</section>
+
+<!-- ── Star belt ── -->
+<div class="star-belt">
+  <img style="left:calc(50% - 46px);top:10px;width:52px;height:52px;" src="assets/aaaf9fe0e012920ea7c9355aa87aed0dc1b581e5.svg" alt="">
+  <img style="left:calc(50% - 39px);top:8px;width:46px;height:48px;"  src="assets/f4e65b551a8b2c19e9b396db715318c245ec96fe.svg" alt="">
+  <img style="left:calc(50% - 255px);top:8px;width:21px;height:21px;" src="assets/2ec8d426ceca6976b4befad02ec3cc3afe3afe1c.svg" alt="">
+  <img style="left:calc(50% + 134px);top:8px;width:21px;height:21px;" src="assets/2ec8d426ceca6976b4befad02ec3cc3afe3afe1c.svg" alt="">
+  <img style="left:calc(50% - 430px);top:16px;width:15px;height:15px;" src="assets/303a2e9f811ebe3dd2a59c06606c34cff6b668e2.svg" alt="">
+  <img style="left:calc(50% - 437px);top:78px;width:15px;height:15px;" src="assets/303a2e9f811ebe3dd2a59c06606c34cff6b668e2.svg" alt="">
+  <img style="left:calc(50% + 249px);top:70px;width:15px;height:15px;" src="assets/303a2e9f811ebe3dd2a59c06606c34cff6b668e2.svg" alt="">
+  <img style="left:calc(50% - 385px);top:62px;width:10px;height:10px;" src="assets/0a1fdbe0c4c6b46f837b085ae41ba5753ec26a73.svg" alt="">
+  <img style="left:calc(50% - 318px);top:28px;width:10px;height:10px;" src="assets/0a1fdbe0c4c6b46f837b085ae41ba5753ec26a73.svg" alt="">
+  <img style="left:calc(50% - 148px);top:5px;width:10px;height:10px;"  src="assets/0a1fdbe0c4c6b46f837b085ae41ba5753ec26a73.svg" alt="">
+  <img style="left:calc(50% + 370px);top:56px;width:10px;height:10px;" src="assets/0a1fdbe0c4c6b46f837b085ae41ba5753ec26a73.svg" alt="">
+  <img style="left:calc(50% + 290px);top:32px;width:10px;height:10px;" src="assets/0a1fdbe0c4c6b46f837b085ae41ba5753ec26a73.svg" alt="">
+  <img style="left:calc(50% + 435px);top:73px;width:10px;height:10px;" src="assets/0a1fdbe0c4c6b46f837b085ae41ba5753ec26a73.svg" alt="">
+  <img style="left:calc(50% - 330px);top:9px;width:27px;height:27px;"  src="assets/3d26629bd0f1fc6dfc531eecc6d6859cacf70eef.svg" alt="">
+  <img style="left:calc(50% - 130px);top:72px;width:27px;height:27px;" src="assets/3d26629bd0f1fc6dfc531eecc6d6859cacf70eef.svg" alt="">
+  <img style="left:calc(50% + 304px);top:66px;width:27px;height:27px;" src="assets/3d26629bd0f1fc6dfc531eecc6d6859cacf70eef.svg" alt="">
+  <img style="left:calc(50% - 134px);top:8px;width:9px;height:9px;"   src="assets/e1c48f3f736281fdedffc9f7bec3740bf165238a.svg" alt="">
+  <img style="left:calc(50% - 4px);top:82px;width:9px;height:9px;"    src="assets/e1c48f3f736281fdedffc9f7bec3740bf165238a.svg" alt="">
+  <img style="left:calc(50% + 233px);top:10px;width:9px;height:9px;"  src="assets/e1c48f3f736281fdedffc9f7bec3740bf165238a.svg" alt="">
+  <img style="left:calc(50% - 282px);top:26px;width:4.5px;height:5px;" src="assets/ddc02931fa7b280597b3316c94f7be4f49ee094f.svg" alt="">
+  <img style="left:calc(50% - 62px);top:66px;width:4.5px;height:5px;"  src="assets/ddc02931fa7b280597b3316c94f7be4f49ee094f.svg" alt="">
+  <img style="left:calc(50% + 157px);top:46px;width:4.5px;height:5px;" src="assets/ddc02931fa7b280597b3316c94f7be4f49ee094f.svg" alt="">
+  <img style="left:calc(50% + 4px);top:84px;width:4.5px;height:5px;"   src="assets/ddc02931fa7b280597b3316c94f7be4f49ee094f.svg" alt="">
+</div>
+
+<!-- ══ COLLABORATION OPPORTUNITIES ══ -->
+<section class="collab-section">
+  <h2 class="section-heading">Collaboration Opportunities</h2>
+  <p class="section-subtitle">
+    Join forces with our team of creative experts to captivate a habitual and
+    fresh audience. Explore some of our successful partnerships:
+  </p>
+  <div class="collab-cards">
+    <!-- Card 1 — Custom Horoscope Content -->
+    <div class="collab-card">
+      <div class="collab-card-img-wrap">
+        <img class="card-img-1" src="assets/38f29ab4c71dd2a2cb04f5da54558efe1ce33301.png" alt="Custom Horoscope Content" />
+      </div>
+      <div class="collab-card-body">
+        <p><strong>Custom Horoscope Content</strong>Blend astrology content with your unique offering, creating custom communications that cut through the clutter.</p>
+      </div>
+    </div>
+    <!-- Card 2 — Dedicated Email Campaigns (narrower text: 221px) -->
+    <div class="collab-card">
+      <div class="collab-card-img-wrap">
+        <img class="card-img-2" src="assets/b78a8b3eb73cd8e20784f5221082a7aa984d4d24.png" alt="Dedicated Email Campaigns" />
+      </div>
+      <div class="collab-card-body narrow">
+        <p><strong>Dedicated Email Campaigns</strong>Tailored content created exclusively for your brand, reaching users directly in their inboxes.</p>
+      </div>
+    </div>
+    <!-- Card 3 — Site Section Takeovers -->
+    <div class="collab-card">
+      <div class="collab-card-img-wrap">
+        <img class="card-img-3" src="assets/23098de253c6dd29192f43ed1e8efe210af69705.png" alt="Site Section Takeovers" />
+      </div>
+      <div class="collab-card-body">
+        <p><strong>Site Section Takeovers</strong>Strategic takeovers of high-engagement content, seamlessly integrating your brand messaging within the user experience.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TRUSTED BY ══ -->
+<div class="trusted-wrapper">
+  <div class="trusted-section">
+    <h2>Trusted By</h2>
+    <div class="trusted-logos">
+      <img src="assets/5257afb1687fd5a0416d4b4936ef7315fe0bded7.svg" alt="Keen" style="max-height:38px;" />
+      <img src="assets/e1222c64601d0fa3ffb90293f68bf23c93109637.png" alt="BetterHelp" style="max-height:55px;" />
+      <img src="assets/71774870d4b2cc31e6713d54909d60e0fc818fdf.png" alt="Match" style="max-height:36px;" />
+      <img src="assets/b25938f0a4915ade613459076ff8000e425b516a.png" alt="Pandora" style="max-height:32px;" />
+      <img src="assets/7b7eee5e0fda45c1b6d579055ea045055766a258.png" alt="eHarmony" style="max-height:52px;" />
+    </div>
+  </div>
+</div>
+
+<!-- ══ STATS ══ -->
+<section class="stats-section">
+
+  <!-- decorative stars -->
+  <img class="stats-deco" style="left:calc(50% - 340px);top:160px;width:33px;height:33px;mix-blend-mode:multiply;" src="assets/2bf32f2ec6088ce831fc58c3ea2c14649ae4c628.svg" alt="">
+  <img class="stats-deco" style="left:calc(50% - 290px);top:196px;width:20px;height:20px;mix-blend-mode:multiply;" src="assets/f43e76ea97e8fb07285293efb73309d25fd103f2.svg" alt="">
+  <img class="stats-deco" style="left:calc(50% + 256px);top:160px;width:33px;height:33px;mix-blend-mode:multiply;" src="assets/2bf32f2ec6088ce831fc58c3ea2c14649ae4c628.svg" alt="">
+  <img class="stats-deco" style="left:calc(50% + 206px);top:196px;width:20px;height:20px;mix-blend-mode:multiply;" src="assets/f43e76ea97e8fb07285293efb73309d25fd103f2.svg" alt="">
+  <img class="stats-deco" style="left:calc(50% - 18px);top:40px;width:29px;height:29px;mix-blend-mode:multiply;" src="assets/6a9b1e7dc3839641360c2faeba1dc31f465aedc9.svg" alt="">
+  <img class="stats-deco" style="left:calc(50% - 18px);top:480px;width:29px;height:29px;mix-blend-mode:multiply;" src="assets/6a9b1e7dc3839641360c2faeba1dc31f465aedc9.svg" alt="">
+
+  <div class="stats-grid">
+    <div class="stat-item stat-5m">
+      <div class="stat-circle-wrap">
+        <span class="stat-num">5M</span>
+        <span class="stat-lbl">Monthly<br>Unique Visits</span>
+      </div>
+    </div>
+    <div></div>
+    <div class="stat-item stat-75m">
+      <div class="stat-circle-wrap">
+        <span class="stat-num">75M</span>
+        <span class="stat-lbl">Monthly<br>Page Views</span>
+      </div>
+    </div>
+    <div></div>
+    <div class="stat-item stat-65">
+      <div class="stat-circle-wrap">
+        <span class="stat-num">65%</span>
+        <span class="stat-lbl">Female<br>User Base</span>
+      </div>
+    </div>
+    <div></div>
+    <div class="stat-item stat-45m">
+      <div class="stat-circle-wrap">
+        <span class="stat-num">4.5M+</span>
+        <span class="stat-lbl">Active Email<br>Subscribers</span>
+      </div>
+    </div>
+    <div></div>
+    <div class="stat-item stat-2m">
+      <div class="stat-circle-wrap">
+        <span class="stat-num">2M+</span>
+        <span class="stat-lbl">Social Media<br>Followers</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+<!-- ══ TOPICS WE COVER ══ -->
+<section class="topics-section">
+  <h2 class="section-heading">Topics We Cover</h2>
+  <p class="section-subtitle">
+    Our unique audience of wellness-seeking, self-care aficionados are seeking
+    solutions that can help them improve their career, relationship, financial
+    and health prospects.
+  </p>
+  <div class="topics-grid" id="topicsGrid">
+    <div class="topic-item">
+      <img src="assets/f0847a3f6debeaa609165ddafd5c579ce4aeec2f.png" alt="Astrology">
+      <p>Astrology</p>
+    </div>
+    <div class="topic-item">
+      <img src="assets/72a939a732887db95248bfd9bc378058aa03d4c3.png" alt="Tarot">
+      <p>Tarot</p>
+    </div>
+    <div class="topic-item">
+      <img src="assets/d7027723ddc235127e58f00007800fbc099cbd17.png" alt="Relationships">
+      <p>Relationships</p>
+    </div>
+    <div class="topic-item">
+      <img src="assets/f0847a3f6debeaa609165ddafd5c579ce4aeec2f.png" alt="Career">
+      <p>Career</p>
+    </div>
+    <div class="topic-item">
+      <img src="assets/72a939a732887db95248bfd9bc378058aa03d4c3.png" alt="Money">
+      <p>Money</p>
+    </div>
+    <div class="topic-item">
+      <img src="assets/d7027723ddc235127e58f00007800fbc099cbd17.png" alt="Health">
+      <p>Health</p>
+    </div>
+  </div>
+  <div class="topics-dots" id="topicsDots"></div>
+</section>
+
+<!-- ══ CTA ══ -->
+<section class="cta-section">
+  <h2>Let's Create Something Meaningful Together</h2>
+  <p>
+    Our unique audience of 15M are seeking solutions that can help them improve
+    their career, relationship, financial and health prospects.
+  </p>
+</section>
+
+<!-- ══ FORM ══ -->
+<section class="form-section">
+  <img class="form-bg-el form-bg-el-1" src="assets/56d188cbdfe61cbc4706a4ffaaff2ca2b310e252.svg" alt="">
+  <img class="form-bg-el form-bg-el-2" src="assets/d6b8db7736376bf709244c2000eaf207ae16e88b.svg" alt="">
+  <div class="form-container">
+    <h3>Connect with Us</h3>
+    <div class="form-fields">
+      <div class="form-field">
+        <label for="name">Name*</label>
+        <input type="text" id="name" name="name" autocomplete="name">
+      </div>
+      <div class="form-field">
+        <label for="company">Company Name*</label>
+        <input type="text" id="company" name="company" autocomplete="organization">
+      </div>
+      <div class="form-field">
+        <label for="email">Email*</label>
+        <input type="email" id="email" name="email" autocomplete="email">
+      </div>
+      <div class="form-field">
+        <label for="details">Details*</label>
+        <textarea id="details" name="details"></textarea>
+      </div>
+      <button class="btn-send" type="submit">SEND MESSAGE</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <img src="assets/a5297e12c1807b41ac7f7f8d78167349f56dc7ac.png" alt="Footer">
+</footer>
+
+<script>
+  /* ── Topics carousel dots ── */
+  (function () {
+    const grid  = document.getElementById('topicsGrid');
+    const dotsW = document.getElementById('topicsDots');
+    const items = Array.from(grid.querySelectorAll('.topic-item'));
+    let dots = [];
+
+    function isMobile() { return window.innerWidth <= 900; }
+
+    function buildDots() {
+      dotsW.innerHTML = '';
+      dots = [];
+      if (!isMobile()) return;
+      items.forEach(function (_, i) {
+        const btn = document.createElement('button');
+        btn.className = 'topics-dot' + (i === 0 ? ' active' : '');
+        btn.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        btn.addEventListener('click', function () {
+          items[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        });
+        dotsW.appendChild(btn);
+        dots.push(btn);
+      });
+    }
+
+    function updateDots() {
+      if (!dots.length) return;
+      const centre = grid.scrollLeft + grid.clientWidth / 2;
+      let closest = 0, minDist = Infinity;
+      items.forEach(function (item, i) {
+        const dist = Math.abs((item.offsetLeft + item.offsetWidth / 2) - centre);
+        if (dist < minDist) { minDist = dist; closest = i; }
+      });
+      dots.forEach(function (d, i) { d.classList.toggle('active', i === closest); });
+    }
+
+    buildDots();
+    grid.addEventListener('scroll', updateDots, { passive: true });
+    window.addEventListener('resize', function () { buildDots(); updateDots(); });
+  }());
+
+  // Hamburger menu toggle
+  const hamburger = document.getElementById('hamburger');
+  const drawer    = document.getElementById('navDrawer');
+  hamburger.addEventListener('click', () => {
+    drawer.classList.toggle('open');
+    const spans = hamburger.querySelectorAll('span');
+    if (drawer.classList.contains('open')) {
+      spans[0].style.transform = 'translateY(7px) rotate(45deg)';
+      spans[1].style.opacity   = '0';
+      spans[2].style.transform = 'translateY(-7px) rotate(-45deg)';
+    } else {
+      spans[0].style.transform = '';
+      spans[1].style.opacity   = '';
+      spans[2].style.transform = '';
+    }
+  });
+  // Close drawer on link click
+  drawer.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => {
+      drawer.classList.remove('open');
+      hamburger.querySelectorAll('span').forEach(s => {
+        s.style.transform = '';
+        s.style.opacity   = '';
+      });
+    })
+  );
+</script>
+</body>
+</html>
